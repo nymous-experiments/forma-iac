@@ -1,0 +1,22 @@
+- name: Install Nginx
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    name:
+      - nginx
+    state: present
+
+- name: Copy site files
+  become: true
+  ansible.builtin.lineinfile:
+    path: /var/www/html/index.nginx-debian.html
+    search_string: "<h1>Welcome to nginx!</h1>"
+    line: "<h1>Welcome to nginx server {{ ansible_facts['hostname'] }}!</h1>"
+
+- name: Copy site files (continued)
+  become: true
+  ansible.builtin.lineinfile:
+    path: /var/www/html/index.nginx-debian.html
+    line: '<link rel="icon" href="data:,">'
+    insertafter: "<head>"

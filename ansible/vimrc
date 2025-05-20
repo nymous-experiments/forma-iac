@@ -1,0 +1,6 @@
+set mouse=
+
+syntax enable
+
+set expandtab
+set smarttab

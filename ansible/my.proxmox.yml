@@ -1,0 +1,20 @@
+plugin: community.general.proxmox
+# Pass Proxmox URL with environment variable PROXMOX_URL
+# url:
+validate_certs: false # This is BAD
+# Environment variable PROXMOX_USER
+# user:
+# Environment variable PROXMOX_TOKEN_ID
+# token_id:
+# Environment variable PROXMOX_TOKEN_SECRET
+# token_secret:
+
+# proxmox_tags_parsed is an example of a fact only returned when 'want_facts=true'
+want_facts: true
+filter:
+  - "'sandbox' in (proxmox_tags_parsed | list)"
+keyed_groups:
+    # proxmox_tags_parsed is an example of a fact only returned when 'want_facts=true'
+  - key: proxmox_tags_parsed
+    separator: ""
+    prefix: proxmox_tag_

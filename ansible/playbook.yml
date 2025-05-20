@@ -1,0 +1,32 @@
+- name: Base server setup
+  hosts: proxmox_tag_terraform
+  tasks:
+    - name: Install base packages
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+        name:
+          - vim
+          - htop
+          - iftop
+          - iotop
+        state: present
+
+    - name: Copy default vim config
+      ansible.builtin.copy:
+        src: vimrc
+        dest: /root/.vimrc
+        owner: root
+        group: root
+        mode: "0600"
+
+
+- name: Deploy application servers
+  hosts: proxmox_tag_terraform:&proxmox_tag_nginx
+  roles:
+    - nginx
+
+- name: Deploy load balancer servers
+  hosts: proxmox_tag_terraform:&proxmox_tag_haproxy
+  roles:
+    - haproxy
