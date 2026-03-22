@@ -6,7 +6,7 @@ Test LXC by Nymous, managed by Terraform
 
 Nginx
 EOT
-  tags = ["terraform", "nginx"]
+  tags        = ["terraform", "nginx"]
   pool_id     = data.proxmox_virtual_environment_pool.sandbox.pool_id
 
   node_name = var.pve_node
@@ -27,7 +27,7 @@ EOT
     }
 
     user_account {
-      keys = [var.pve_lxc_ssh_key]
+      keys     = [var.pve_lxc_ssh_key]
       password = random_password.nginx_container_passwords[each.key].result
     }
   }
@@ -62,8 +62,8 @@ resource "random_password" "nginx_container_passwords" {
 }
 
 output "nginx_container_passwords" {
-  value     = {
-    for key, value in random_password.nginx_container_passwords: key => value.result
+  value = {
+    for key, value in random_password.nginx_container_passwords : key => value.result
   }
   sensitive = true
 }
