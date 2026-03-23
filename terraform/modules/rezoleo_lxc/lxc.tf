@@ -1,9 +1,23 @@
+resource "random_shuffle" "random_node" {
+  count        = var.node_names != null ? 1 : 0
+  input        = var.node_names
+  result_count = 1
+}
+
+locals {
+  node_name = var.node_name != null ? var.node_name : random_shuffle.random_node[0].result[0]
+}
+
 resource "proxmox_virtual_environment_container" "lxc" {
   description = var.description
-  tags = var.tags
+  tags        = var.tags
   pool_id     = var.pool_id
 
-  node_name = var.node_name
+  node_name = local.node_name
+
+  lifecycle {
+    ignore_changes = [node_name]
+  }
 
   unprivileged = true
   features {
@@ -21,7 +35,7 @@ resource "proxmox_virtual_environment_container" "lxc" {
     }
 
     user_account {
-      keys = var.root_ssh_key
+      keys     = var.root_ssh_key
       password = random_password.password.result
     }
   }
@@ -52,3 +66,8 @@ resource "random_password" "password" {
   override_special = "_%@"
   special          = true
 }
+
+# resource "aws_instance" "example" {
+#   ami = "ami-0fb653ca2d3203ac1"
+#   instance_type = "t2.micro"
+# }

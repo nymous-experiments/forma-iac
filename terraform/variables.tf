@@ -36,14 +36,19 @@ variable "pve_vm_debian_iso" {
   default = "tardis-images:iso/debian-12.10.0-amd64-netinst.iso"
 }
 
-variable "pve_lxc_ssh_key" {
-  type    = string
-  default = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0SOCu5raj7Vr/jNoPzj6guOsEO8mKmcvRxacUc3/BZ"
+variable "pve_lxc_ssh_keys" {
+  type = list(string)
+  default = [
+    # Desktop
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0SOCu5raj7Vr/jNoPzj6guOsEO8mKmcvRxacUc3/BZ",
+    # Laptop
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1RiKdL70LeN7mCjApVJhBgJOPuppyBX5vtUnbd6Zeg",
+  ]
 }
 
-variable "pve_lxc_debian_12_template" {
+variable "pve_lxc_debian_template" {
   type    = string
-  default = "tardis-images:vztmpl/debian-12-standard_12.7-1_amd64.tar.zst"
+  default = "tardis-images:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
 }
 
 variable "gateway" {

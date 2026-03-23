@@ -1,3 +1,8 @@
+resource "random_shuffle" "random_node" {
+  input        = local.accepted_pve_nodes
+  result_count = length(var.lxc_nginx_hosts)
+}
+
 resource "proxmox_virtual_environment_container" "nginx" {
   for_each = var.lxc_nginx_hosts
 
@@ -9,7 +14,11 @@ EOT
   tags        = ["terraform", "nginx"]
   pool_id     = data.proxmox_virtual_environment_pool.sandbox.pool_id
 
-  node_name = var.pve_node
+  node_name = random_shuffle.random_node.result[parseint(each.key, 10) - 1]
+
+  lifecycle {
+    ignore_changes = [node_name]
+  }
 
   unprivileged = true
   features {
@@ -27,7 +36,7 @@ EOT
     }
 
     user_account {
-      keys     = [var.pve_lxc_ssh_key]
+      keys     = var.pve_lxc_ssh_keys
       password = random_password.nginx_container_passwords[each.key].result
     }
   }
@@ -48,7 +57,7 @@ EOT
     size         = 4 // In GB
   }
   operating_system {
-    template_file_id = var.pve_lxc_debian_12_template
+    template_file_id = var.pve_lxc_debian_template
     type             = "debian"
   }
 }
