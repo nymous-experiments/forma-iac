@@ -43,6 +43,7 @@ variable "pve_lxc_ssh_keys" {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII0SOCu5raj7Vr/jNoPzj6guOsEO8mKmcvRxacUc3/BZ",
     # Laptop
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1RiKdL70LeN7mCjApVJhBgJOPuppyBX5vtUnbd6Zeg",
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkvsyYGLJE6VMmErih8FExFYrygEKl5cG1iJzOZscsA",
   ]
 }
 
