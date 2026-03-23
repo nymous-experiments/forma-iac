@@ -3,6 +3,8 @@
 .vscode
 .ansible
 
+.env
+
 ### Terraform template
 # Local .terraform directories
 **/.terraform/*

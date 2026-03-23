@@ -1,4 +1,4 @@
-plugin: community.general.proxmox
+plugin: community.proxmox.proxmox
 # Pass Proxmox URL with environment variable PROXMOX_URL
 # url:
 validate_certs: false # This is BAD
